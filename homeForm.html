@@ -1,22 +1,49 @@
-<h1> Meme Deals Home</h1>
-This app reads a number!
+<h1> Real Deals </h1>
+We will find you the best deals for this game!
+</br>
+What game are you looking for?
+</br>
+
 
 <form method='get' action='/process'>
-	 <input name='blank'><br>
-	
-
-		<input type="radio" name="searchBy" value="blank" >
-		Name
-
-	<label> -->
-		<input type="radio" name="searchBy" value="blank">
-	What Game Looking for? 
-	<!-- </label> -->
-	<br>
-	<br>
-	
+		Game: <input type = 'text' name= 'game_name'>
+		<br>
 	<input type = "submit" value = "Search">
 
 
 </form>
-	
+
+
+
+<!-- current deals from api using php -->
+<h1>API: IP Stack Info</h1>
+<script>
+  function fetchIPInfo() {
+	url =
+	"https://www.cheapshark.com/api/1.0/deals"
+
+	fetch(url)
+	  .then((res) => res.text())
+	  .then((data) => {
+		data = JSON.parse(data);
+		const theDataInfo =
+		  //head
+		  "<h2>IP Information</h2>" +
+		  //info of some of the data
+		  "<p>name: " +
+		  data.name +
+		  "</p>" +
+		  "<p>salePrice: " +
+		  data.salePrice +
+		  "</p>" +
+		  "<p>retailPrice: " +
+		  data.retailPrice +
+		  "</p>" +
+		  "<p>thumb: " +
+		  data.thumb +
+		  "</p>";
+
+		document.getElementById("IPInfo").innerHTML = theDataInfo;
+	  })
+	  .catch((error) => console.error(error));
+  }
