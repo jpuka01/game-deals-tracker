@@ -1,24 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // Assuming you have a User model for MongoDB
+const User = require('./user');
 
-// Handle the login process
 router.post('/', async (req, res) => {
     const { username } = req.body;
 
     try {
-        // Check if the username exists in the database
         const user = await User.findOne({ username });
-
-        if (!user) {
-            return res.status(404).send('Username not found');
+        if (user) {
+            res.status(200).json({ message: 'Login successful' });
+        } else {
+            res.status(401).json({ message: 'Invalid username' });
         }
-
-        // Login successful, proceed further (e.g., create a session or return success)
-        // For simplicity, we're returning a success message.
-        res.status(200).send('Login successful');
     } catch (error) {
-        res.status(500).send('Error processing login');
+        console.error('Error during login:', error);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
