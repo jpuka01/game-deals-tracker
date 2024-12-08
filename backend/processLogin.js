@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('./user');
 
-router.post('/', async (req, res) => {
+app.post('/login', async (req, res) => {
     const { username } = req.body;
 
     try {
@@ -18,4 +18,5 @@ router.post('/', async (req, res) => {
     }
 });
 
-module.exports = router;
+// edit this 
+module.exports = processLogin;
