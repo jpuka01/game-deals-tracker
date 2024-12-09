@@ -10,7 +10,7 @@ const nodemailer = require('nodemailer');
 // Express App Setup
 const app = express();
 app.use(cors({ 
-    origin: 'https://jpuka01.github.io/game-deals-tracker',
+    origin: 'https://jpuka01.github.io',
 }));
 app.use(express.json());
 
