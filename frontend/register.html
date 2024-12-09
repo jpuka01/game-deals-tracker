@@ -1,50 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register Page</title>
-  </head>
-  <body>
-    <h1>Register</h1>
-    <form method="POST" action="http://localhost:3000/processRegister">
-      <!-- Username Input -->
-      <div>
-        <label for="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Enter your username"
-          required
-        />
-      </div>
-
-      <!-- Email Input -->
-      <div>
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Enter your email"
-          required
-        />
-      </div>
-
-      <!-- Checkbox for Latest Deals -->
-      <div>
-        <label for="receiveDeals">
-          <input type="checkbox" id="receiveDeals" name="receiveDeals" />
-          Yes, I would like to receive the latest game deals!
-        </label>
-      </div>
-
-      <!-- Submit Button -->
-      <button type="submit">Register</button>
-    </form>
-
-    <!-- Link to Login Page -->
-    <p>Already have an account? <a href="login.html">Login here</a></p>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Deal Tracker - Register</title>
+    <link rel="icon" href="../assets/favicon.png" type="image/png">
+    <link rel="stylesheet" href="../public/index.css">
+</head>
+<body class="bg-slateBlue text-lightGray min-h-screen flex items-center justify-center">
+    <div class="bg-white text-black p-8 rounded shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-heading mb-4">Register</h1>
+        <form id="registerForm" class="space-y-4">
+            <input type="text" id="username" placeholder="Username" required class="w-full p-2 border border-gray-300 rounded">
+            <input type="email" id="email" placeholder="Email" required class="w-full p-2 border border-gray-300 rounded">
+            <input type="password" id="password" placeholder="Password" required class="w-full p-2 border border-gray-300 rounded">
+            <button type="submit" class="w-full bg-electricBlue text-white p-2 rounded hover:bg-blue-700 transition">Register</button>
+        </form>
+        <p class="mt-4">Already have an account? <a href="login.html" class="text-electricBlue underline">Login here</a></p>
+    </div>
+    <script type="module" src="../frontend/api/register.js"></script>
+</body>
 </html>

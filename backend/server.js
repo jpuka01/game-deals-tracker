@@ -49,9 +49,14 @@ app.get('/deals', async (_, res) => {
 
 // 2. User Registration
 app.post('/register', async (req, res) => {
-    const { username, email } = req.body;
+    const { username, email, password } = req.body;
     try {
-        const newUser = new User({ username, email });
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+        
+        const newUser = new User({ username, email, password, favorites: [] });
         await newUser.save();
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
