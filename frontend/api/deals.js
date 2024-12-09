@@ -1,18 +1,30 @@
-import { fetchDeals } from './api/deals.js';
+import { BACKEND_URL } from './config.js';
 
 // Fetch deals and render them
-async function loadDeals(query = '') {
+const fetchDeals = async () => {
+    try {
+        const response = await fetch(`${BACKEND_URL}/deals`);
+    }
+};
+
+
+async function fetchDeals(query = '') {
     const app = document.getElementById('app');
     app.innerHTML = '<p>Loading deals...</p>';
     try {
-        const response = await fetchDeals(query);
+        const response = await fetch(`${BACKEND_URL}/deals`);
+        let deals = await response.json();
+
+        // Filter deals by search query
+        if (query) {
+            deals = deals.filter(deal => deal.title.toLowerCase().includes(query.toLowerCase()));
+        }
 
         if (deals.length === 0) {
             app.innerHTML = '<p>No deals found.</p>';
         } else {
             renderDeals(deals);
         }
-
     } catch (error) {
         app.innerHTML = '<p>Error fetching deals. Please try again later.</p>';
         console.error('Error:', error);
@@ -44,4 +56,4 @@ document.getElementById('searchBar').addEventListener('input', (e) => {
 });
 
 // Initial fetch
-loadDeals();
+fetchDeals();

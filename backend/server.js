@@ -7,7 +7,9 @@ const nodemailer = require('nodemailer');
 
 // Express App Setup
 const app = express();
-app.use(cors());
+app.use(cors({ 
+    origin: 'https://jpuka01.github.io/game-deals-tracker/',
+}));
 app.use(express.json());
 
 // MongoDB Connection Setup
