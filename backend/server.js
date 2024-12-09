@@ -37,7 +37,8 @@ const User = mongoose.model('User', userSchema);
 // Routes
 
 // 1. Fetch the API
-app.get('/deals', async (req, res) => {
+app.get('/deals', async (_, res) => {
+    console.log('Fetching deals...');
     try {
         const response = await axios.get('https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15');
         res.json(response.data);
