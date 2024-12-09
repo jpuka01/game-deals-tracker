@@ -5,7 +5,7 @@ async function loadDeals(query = '') {
     const app = document.getElementById('app');
     app.innerHTML = '<p>Loading deals...</p>';
     try {
-        const response = await fetchDeals(query);
+        const deals = await fetchDeals(query);
 
         if (deals.length === 0) {
             app.innerHTML = '<p>No deals found.</p>';

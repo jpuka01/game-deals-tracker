@@ -16,4 +16,4 @@ export async function fetchDeals(query = '') {
         console.error('Error fetching deals:', error);
         throw error;
     }
-};
+}
