@@ -1,0 +1,23 @@
+/* All page content take full width and height veiw */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.register-form, .login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.register-form input, .login-form input {
+    padding: 0.15rem;
+}
+
+main {
+    flex-grow: 1;
+}

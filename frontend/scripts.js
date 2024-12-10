@@ -38,6 +38,29 @@ function renderDeals(deals) {
     `;
 }
 
+// Check if the user is logged in
+document.addEventListener('DOMContentLoaded', () => {
+    const username = localStorage.getItem('username');
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    const logoutButton = document.getElementById('logoutButton');
+    const signInButton = document.getElementById('signInButton');
+
+    if (username) {
+        usernameDisplay.textContent = `Welcome, ${username}`;
+        usernameDisplay.classList.remove('hidden');
+        logoutButton.classList.remove('hidden');
+        signInButton.classList.add('hidden');
+    }
+
+    // Logout functionality
+    logoutButton.addEventListener('click', () => {
+        localStorage.removeItem('username');
+        localStorage.removeItem('token');
+        window.location.href = 'index.html';
+    });
+});
+
+
 // Search bar functionality
 document.getElementById('searchBar').addEventListener('input', (e) => {
     fetchDeals(e.target.value);

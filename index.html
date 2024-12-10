@@ -6,18 +6,17 @@
     <title>Game Deal Tracker</title>
     <link rel="icon" href="./assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="public/index.css">
+    <link rel="stylesheet" href="./frontend/fix.css"></head>
 </head>
 <body>
     <header class="bg-slateBlue text-lightGray p-4">
         <nav class="flex justify-between items-center">
-            <h1 class="text-2xl font-heading">Game Deal Tracker</h1>
+            <a href="index.html" class="text-2xl font-heading">Game Deal Tracker</a>
             <div class="flex items-center gap-4">
-            <a href="login.html" 
-                   class="bg-gray-100 text-slate-700 px-4 py-2 rounded hover:bg-slate-700 hover:text-gray-100 transition">
-                    Sign In
-                </a>
-            <input id="searchBar" type="text" placeholder="Search games..."
-                   class="rounded px-4 py-2 text-black" />
+                <span id="usernameDisplay" class="hidden text-white"></span>
+                <button id="logoutButton" class="hidden bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Logout</button>
+                <a href="./frontend/login.html" class="bg-gray-100 text-slate-700 px-4 py-2 rounded hover:bg-slate-700 hover:text-gray-100 transition">Sign In</a>
+                <input id="searchBar" type="text" placeholder="Search games..." class="rounded px-4 py-2 text-black" />
             </div>
         </nav>
     </header>

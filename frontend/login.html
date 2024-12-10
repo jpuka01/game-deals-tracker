@@ -1,31 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Page</title>
-  </head>
-  <body>
-    <h1>Login</h1>
-    <form method="POST" action="http://localhost:3000/processLogin">
-      <!-- Username Input -->
-      <div>
-        <label for="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Enter your username"
-          required
-        />
-      </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Deal Tracker - Login</title>
+    <link rel="icon" href="../assets/favicon.png" type="image/png">
+    <link rel="stylesheet" href="../public/index.css">
+    <link rel="stylesheet" href="./fix.css">
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-slateBlue text-lightGray p-4">
+        <nav class="flex justify-between items-center">
+            <a href="../index.html" class="text-2xl font-heading">Game Deal Tracker</a>
+            <div class="flex items-center gap-4">
+                <a href="register.html" class="bg-gray-100 text-slate-700 px-4 py-2 rounded hover:bg-slate-700 hover:text-gray-100 transition">Register</a>
+            </div>
+        </nav>
+    </header>
 
-      <!-- Submit Button -->
-      <button type="submit">Login</button>
-    </form>
-	
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center bg-slateBlue">
+        <div class="bg-white text-lightGray p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h1 class="text-2xl font-heading mb-6 text-center">Login</h1>
+            <form id="loginForm" class="login-form">
+                <input type="text" id="username" placeholder="Username" required
+                       class="w-2/3 text-black p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-electricBlue">
+                <input type="password" id="password" placeholder="Password" required
+                       class="w-2/3 text-black p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-electricBlue">
+                <button type="submit"
+                        class="w-full bg-electricBlue text-white p-2 rounded hover:bg-blue-700 active:bg-blue-800 transition">
+                    Login
+                </button>
+            </form>
+            <p class="mt-4 text-center">Don't have an account? <a href="register.html" class="text-electricBlue underline hover:text-blue-700">Register here</a></p>
+        </div>
+    </main>
 
-    <!-- Link to Register Page -->
-    <p>Don't have an account? <a href="register.html">Register here</a></p>
-  </body>
+    <!-- Footer -->
+    <footer class="bg-slateBlue text-lightGray p-4 text-center">
+        <p>© 2024 Game Deal Tracker. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="../frontend/api/login.js"></script>
+</body>
 </html>
