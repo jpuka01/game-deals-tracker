@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Deal Tracker - Favorites</title>
+    <link rel="icon" href="../assets/favicon.png" type="image/png">
+    <link rel="stylesheet" href="../public/index.css">
+    <link rel="stylesheet" href="./fix.css">
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-slateBlue text-lightGray p-4">
+        <nav class="flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-heading">Game Deal Tracker</a>
+            <div class="flex items-center gap-4">
+                <a href="logout.html" id="logoutButton" class="bg-gray-100 text-slate-700 px-4 py-2 rounded hover:bg-slate-700 hover:text-gray-100 transition">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-center">
+        <div class="container mx-auto p-6">
+            <h1 class="text-3xl font-heading mb-6 text-center">Your Favorite Deals</h1>
+            <div id="app" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Deals will be dynamically injected here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slateBlue text-lightGray p-4 text-center">
+        <p>© 2024 Game Deal Tracker. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="../frontend/api/favorites.js"></script>
+</body>
+</html>

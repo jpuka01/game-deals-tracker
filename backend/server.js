@@ -105,7 +105,11 @@ app.put('/favorites', async (req, res) => {
             res.status(404).json({ message: 'User not found' });
         }
 
-        user.favorites.push(dealID);
+        if (!user.favorites.includes(dealID)) {
+            user.favorites.push(dealID);
+            await user.save();
+        }
+
         await user.save();
         res.status(200).json({ message: 'Favorite deal added', favorites: user.favorites });
     } catch (error) {
@@ -122,6 +126,7 @@ app.get('/favorites/:username', async (req, res) => {
             res.status(404).json({ message: 'User not found' });
         }
 
+        const favorites = user.favorites;
         res.status(200).json({ favorites: user.favorites });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching favorites', error });
