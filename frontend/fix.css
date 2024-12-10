@@ -36,9 +36,3 @@ main {
     text-align: center;
     height: 100%;
 }
-
-.favorite-grids {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}

@@ -100,24 +100,22 @@ async function renderFavorites(favorites) {
 
         // Display the valid deal details
         app.innerHTML = `
-            <div class="favorite-grids">
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    ${validDealDetails.map(deal => {
-                        const dealDetails = deal.gameInfo; // Access the gameInfo object
-                        return `
-                            <div class="card border border-gray-200 rounded p-4 shadow-md">
-                                <img class="w-full rounded" src="${dealDetails.thumb}" alt="${dealDetails.name}">
-                                <h2 class="text-lg font-bold mt-2">${dealDetails.name}</h2>
-                                <p class="text-gray-600">Sale Price: $${dealDetails.salePrice}</p>
-                                <p class="text-gray-500 line-through">Normal Price: $${dealDetails.retailPrice}</p>
-                                <p class="text-gray-600">Steam Rating: ${dealDetails.steamRatingText} (${dealDetails.steamRatingPercent}%)</p>
-                                <p class="text-gray-600">Metacritic Score: ${dealDetails.metacriticScore}</p>
-                                <a href="https://www.cheapshark.com/redirect?dealID=${deal.dealID}" target="_blank"
-                                class="text-electricBlue underline mt-2 inline-block">View Deal</a>
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                ${validDealDetails.map(deal => {
+                    const dealDetails = deal.gameInfo; // Access the gameInfo object
+                    return `
+                        <div class="card border border-gray-200 rounded p-4 shadow-md">
+                            <img class="w-full rounded" src="${dealDetails.thumb}" alt="${dealDetails.name}">
+                            <h2 class="text-lg font-bold mt-2">${dealDetails.name}</h2>
+                            <p class="text-gray-600">Sale Price: $${dealDetails.salePrice}</p>
+                            <p class="text-gray-500 line-through">Normal Price: $${dealDetails.retailPrice}</p>
+                            <p class="text-gray-600">Steam Rating: ${dealDetails.steamRatingText} (${dealDetails.steamRatingPercent}%)</p>
+                            <p class="text-gray-600">Metacritic Score: ${dealDetails.metacriticScore}</p>
+                            <a href="https://www.cheapshark.com/redirect?dealID=${deal.dealID}" target="_blank"
+                            class="text-electricBlue underline mt-2 inline-block">View Deal</a>
+                        </div>
+                    `;
+                }).join('')}
             </div>
         `;;
     } catch (error) {
