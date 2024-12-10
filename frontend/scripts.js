@@ -65,9 +65,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // Search bar functionality
-document.getElementById('searchBar').addEventListener('input', (e) => {
-    loadDeals(e.target.value);
+document.addEventListener('DOMContentLoaded', () => {
+    const searchBar = document.getElementById('searchBar');
+
+    if (searchBar) {
+        searchBar.addEventListener('input', (e) => {
+            const query = e.target.value;
+            loadDeals(query);
+        });
+    } else {
+        console.error('Search bar not found');
+    }
+
+    // Initial fetch
+    loadDeals();
 });
+
 
 // Initial fetch
 loadDeals();
