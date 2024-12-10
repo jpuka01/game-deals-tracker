@@ -43,13 +43,13 @@ async function loadFavorites() {
             return;
         }
 
+        console.log('Fetched favorites:', favorites); // Debugging
         renderFavorites(favorites);
     } catch (error) {
         console.error('Error fetching favorites:', error);
         alert('Error fetching favorite deals.');
     }
 }
-
 
 async function renderFavorites(favorites) {
     const app = document.getElementById('app');
@@ -59,7 +59,6 @@ async function renderFavorites(favorites) {
     }
 
     try {
-        // Fetch details for each dealID
         const dealDetails = await Promise.all(favorites.map(async (encodedDealID) => {
             const dealID = decodeURIComponent(encodedDealID).trim();
             if (!dealID) {
@@ -82,7 +81,6 @@ async function renderFavorites(favorites) {
             }
         }));
 
-        // Filter out null values for failed fetches
         const validDealDetails = dealDetails.filter(deal => deal !== null);
 
         if (validDealDetails.length === 0) {
@@ -90,7 +88,6 @@ async function renderFavorites(favorites) {
             return;
         }
 
-        // Render valid deals
         app.innerHTML = `
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 ${validDealDetails.map(deal => `
@@ -110,8 +107,6 @@ async function renderFavorites(favorites) {
         app.innerHTML = '<p>Error loading favorite deals. Please try again later.</p>';
     }
 }
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
     checkLoginStatus();
