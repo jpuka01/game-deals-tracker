@@ -52,7 +52,7 @@ async function loadFavorites() {
 }
 
 async function renderFavorites(favorites) {
-    const app = document.getElementById('app');
+    const app = document.getElementById('app-favorites');
     if (!favorites || favorites.length === 0) {
         app.innerHTML = '<p>No favorite deals found.</p>';
         return;
