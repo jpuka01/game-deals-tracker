@@ -30,7 +30,19 @@ async function loadFavorites() {
 
     try {
         const response = await fetch(`${BACKEND_URL}/favorites/${username}`);
-        const { favorites } = await response.json();
+        if (!response.ok) {
+            throw new Error('Failed to fetch favorites.');
+        }
+
+        const data = await response.json();
+        const { favorites } = data;
+
+        if (!Array.isArray(favorites)) {
+            console.error('Invalid favorites data:', favorites);
+            alert('Error fetching favorite deals.');
+            return;
+        }
+
         renderFavorites(favorites);
     } catch (error) {
         console.error('Error fetching favorites:', error);
@@ -38,28 +50,47 @@ async function loadFavorites() {
     }
 }
 
+
 async function renderFavorites(favorites) {
     const app = document.getElementById('app');
-    if (favorites.length === 0) {
+    if (!favorites || favorites.length === 0) {
         app.innerHTML = '<p>No favorite deals found.</p>';
         return;
     }
 
     try {
+        // Fetch details for each dealID
         const dealDetails = await Promise.all(favorites.map(async (encodedDealID) => {
-            const dealID = decodeURIComponent(encodedDealID);
-            console.log(`Fetching details for dealID: ${dealID}`); // Debugging line
-            const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?id=${dealID}`);
-            if (!response.ok) {
-                console.error(`Failed to fetch details for dealID: ${dealID}`);
+            const dealID = decodeURIComponent(encodedDealID).trim();
+            if (!dealID) {
+                console.error('Invalid dealID:', encodedDealID);
                 return null;
             }
-            return await response.json();
+
+            console.log(`Fetching details for dealID: ${dealID}`); // Debugging
+            try {
+                const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?id=${dealID}`);
+                if (response.ok) {
+                    return await response.json();
+                } else {
+                    console.error(`Failed to fetch details for dealID: ${dealID}`);
+                    return null;
+                }
+            } catch (fetchError) {
+                console.error(`Fetch error for dealID: ${dealID}`, fetchError);
+                return null;
+            }
         }));
 
-        // Filter out any null values from failed fetches
+        // Filter out null values for failed fetches
         const validDealDetails = dealDetails.filter(deal => deal !== null);
 
+        if (validDealDetails.length === 0) {
+            app.innerHTML = '<p>No valid favorite deals could be loaded.</p>';
+            return;
+        }
+
+        // Render valid deals
         app.innerHTML = `
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 ${validDealDetails.map(deal => `
@@ -75,10 +106,11 @@ async function renderFavorites(favorites) {
             </div>
         `;
     } catch (error) {
-        console.error('Error fetching favorite deal details:', error);
+        console.error('Error rendering favorite deals:', error);
         app.innerHTML = '<p>Error loading favorite deals. Please try again later.</p>';
     }
 }
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
