@@ -42,7 +42,7 @@ function renderDeals(deals) {
 document.addEventListener('DOMContentLoaded', () => {
     const usernameDisplay = document.getElementById('usernameDisplay');
     const logoutButton = document.getElementById('logoutButton');
-    const signInButton = document.querySelector('a[href="./login.html"]');
+    const signInButton = document.querySelector('a[href="./frontend/login.html"]');
 
     // Parse the username from the URL
     const pathSegments = window.location.pathname.split('/');
