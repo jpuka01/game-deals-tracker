@@ -99,7 +99,28 @@ async function renderFavorites(favorites) {
         }
     
         // Display the valid deal details
-        app.innerHTML = validDealDetails.map(deal => `<p>${JSON.stringify(deal)}</p>`).join('');
+        // app.innerHTML = validDealDetails.map(deal => `<p>${JSON.stringify(deal)}</p>`).join('');
+        app.innerHTML = validDealDetails.map(deal => {
+            const dealDetails = JSON.parse(JSON.stringify(deal));
+            return `
+                <div>
+                    <h2>${dealDetails.name}</h2>
+                    <p><strong>Store ID:</strong> ${dealDetails.storeID}</p>
+                    <p><strong>Game ID:</strong> ${dealDetails.gameID}</p>
+                    <p><strong>Steam App ID:</strong> ${dealDetails.steamAppID}</p>
+                    <p><strong>Sale Price:</strong> $${dealDetails.salePrice}</p>
+                    <p><strong>Retail Price:</strong> $${dealDetails.retailPrice}</p>
+                    <p><strong>Steam Rating:</strong> ${dealDetails.steamRatingText} (${dealDetails.steamRatingPercent}%)</p>
+                    <p><strong>Steam Rating Count:</strong> ${dealDetails.steamRatingCount}</p>
+                    <p><strong>Metacritic Score:</strong> ${dealDetails.metacriticScore}</p>
+                    <p><strong>Metacritic Link:</strong> <a href="${dealDetails.metacriticLink}">${dealDetails.metacriticLink}</a></p>
+                    <p><strong>Release Date:</strong> ${new Date(dealDetails.releaseDate * 1000).toLocaleDateString()}</p>
+                    <p><strong>Publisher:</strong> ${dealDetails.publisher}</p>
+                    <p><strong>Steamworks:</strong> ${dealDetails.steamworks}</p>
+                    <img src="${dealDetails.thumb}" alt="${dealDetails.name}">
+                </div>
+            `;
+        }).join('');
     } catch (error) {
         console.error('Error fetching deal details:', error);
         app.innerHTML = '<p>There was an error loading your favorite deals.</p>';
