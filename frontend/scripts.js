@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Search bar functionality
 document.getElementById('searchBar').addEventListener('input', (e) => {
-    fetchDeals(e.target.value);
+    loadDeals(e.target.value);
 });
 
 // Initial fetch
