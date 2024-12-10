@@ -136,6 +136,24 @@ const sendEmail = async (to, subject, text) => {
     }
 };
 
+// Registered User Homepage
+app.get('/index/:username', async (req, res) => {
+    const { username } = req.params;
+    try {
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({
+            message: `Welcome back, ${username}`,
+            favorites: user.favorites,
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching user data', error });
+    }
+});
+
+
 // Email Route
 app.post('/send-email', async (req, res) => {
     const { to, subject, text } = req.body;

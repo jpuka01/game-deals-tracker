@@ -16,8 +16,9 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         if (response.ok) {
             const data = await response.json();
             alert('Login successful');
-            localStorage.setItem('token', data.token); // Save token for authenticated routes
-            window.location.href = '../../index.html'; // Redirect to home page
+            localStorage.setItem('token', data.token); // Save token
+            localStorage.setItem('username', username); // Save username
+            window.location.href = `../../index/${username}`; // Redirect to personalized page
         } else {
             const errorMessage = await response.text();
             alert(`Error: ${errorMessage}`);

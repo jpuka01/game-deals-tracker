@@ -40,23 +40,32 @@ function renderDeals(deals) {
 
 // Check if the user is logged in
 document.addEventListener('DOMContentLoaded', () => {
-    const username = localStorage.getItem('username');
     const usernameDisplay = document.getElementById('usernameDisplay');
     const logoutButton = document.getElementById('logoutButton');
-    const signInButton = document.getElementById('signInButton');
+    const signInButton = document.querySelector('a[href="./login.html"]');
 
-    if (username) {
-        usernameDisplay.textContent = `Welcome, ${username}`;
+    // Parse the username from the URL
+    const pathSegments = window.location.pathname.split('/');
+    const username = pathSegments[pathSegments.length - 1];
+
+    if (username && username !== 'index.html') {
+        // Show username and logout button
+        usernameDisplay.textContent = `Welcome, ${decodeURIComponent(username)}`;
         usernameDisplay.classList.remove('hidden');
         logoutButton.classList.remove('hidden');
         signInButton.classList.add('hidden');
     }
 
+    if (!username || username === 'index.html') {
+        logoutButton.classList.add('hidden');
+        signInButton.classList.remove('hidden');
+    }    
+
     // Logout functionality
     logoutButton.addEventListener('click', () => {
         localStorage.removeItem('username');
         localStorage.removeItem('token');
-        window.location.href = 'index.html';
+        window.location.href = '../index.html';
     });
 });
 
