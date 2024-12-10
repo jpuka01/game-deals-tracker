@@ -18,6 +18,10 @@ html, body {
     padding: 0.15rem;
 }
 
+.hidden {
+    display: none;
+}
+
 main {
     flex-grow: 1;
 }
