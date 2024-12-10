@@ -37,15 +37,32 @@ const User = mongoose.model('User', userSchema);
 // Routes
 
 // 1. Fetch the API
-app.get('/deals', async (_, res) => {
+app.get('/deals', async (req, res) => {
+    const { search } = req.query; // Retrieve 'search' query param
     console.log('Fetching deals...');
     try {
-        const response = await axios.get('https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15');
-        res.json(response.data);
+        let response;
+        if (search) {
+            // Fetch the full deals API and filter results
+            response = await axios.get('https://www.cheapshark.com/api/1.0/deals');
+            const allDeals = response.data;
+
+            // Filter deals based on the search query
+            const filteredDeals = allDeals.filter(deal =>
+                deal.title.toLowerCase().includes(search.toLowerCase())
+            );
+
+            res.json(filteredDeals);
+        } else {
+            // Default behavior
+            response = await axios.get('https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15');
+            res.json(response.data);
+        }
     } catch (error) {
         res.status(500).send('Error fetching deals');
     }
 });
+
 
 // 2. User Registration
 app.post('/register', async (req, res) => {
