@@ -59,29 +59,34 @@ async function renderFavorites(favorites) {
     }
 
     try {
-        const dealDetails = await Promise.all(favorites.map(async (encodedDealID) => {
-            const dealID = decodeURIComponent(encodedDealID).trim();
-            if (!dealID) {
-                console.error('Invalid dealID:', encodedDealID);
-                return null;
-            }
+        const dealDetails = await Promise.all(
+            favorites.map(async (encodedDealID) => {
+                const dealID = decodeURIComponent(encodedDealID).trim();
 
-            console.log(`Fetching details for dealID: ${dealID}`); // Debugging
-            try {
-                const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?id=${dealID}`);
-                if (response.ok) {
-                    return await response.json();
-                } else {
-                    console.error(`Failed to fetch details for dealID: ${dealID}`);
+                if (!dealID) {
+                    console.error('Invalid dealID:', encodedDealID);
                     return null;
                 }
-            } catch (fetchError) {
-                console.error(`Fetch error for dealID: ${dealID}`, fetchError);
-                return null;
-            }
-        }));
 
-        const validDealDetails = dealDetails.filter(deal => deal !== null);
+                console.log(`Fetching details for dealID: ${dealID}`);
+                try {
+                    const response = await fetch(
+                        `https://www.cheapshark.com/api/1.0/deals?id=${dealID}`
+                    );
+                    if (response.ok) {
+                        return await response.json();
+                    } else {
+                        console.error(`Failed to fetch details for dealID: ${dealID}`);
+                        return null;
+                    }
+                } catch (fetchError) {
+                    console.error(`Fetch error for dealID: ${dealID}`, fetchError);
+                    return null;
+                }
+            })
+        );
+
+        const validDealDetails = dealDetails.filter((deal) => deal !== null);
 
         if (validDealDetails.length === 0) {
             app.innerHTML = '<p>No valid favorite deals could be loaded.</p>';
@@ -90,7 +95,9 @@ async function renderFavorites(favorites) {
 
         app.innerHTML = `
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                ${validDealDetails.map(deal => `
+                ${validDealDetails
+                    .map(
+                        (deal) => `
                     <div class="card border border-gray-200 rounded p-4 shadow-md">
                         <img class="w-full rounded" src="${deal.thumb}" alt="${deal.title}">
                         <h2 class="text-lg font-bold mt-2">${deal.title}</h2>
@@ -99,7 +106,9 @@ async function renderFavorites(favorites) {
                         <a href="https://www.cheapshark.com/redirect?dealID=${deal.dealID}" target="_blank"
                            class="text-electricBlue underline mt-2 inline-block">View Deal</a>
                     </div>
-                `).join('')}
+                `
+                    )
+                    .join('')}
             </div>
         `;
     } catch (error) {
@@ -107,6 +116,7 @@ async function renderFavorites(favorites) {
         app.innerHTML = '<p>Error loading favorite deals. Please try again later.</p>';
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     checkLoginStatus();
