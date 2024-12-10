@@ -43,29 +43,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const usernameDisplay = document.getElementById('usernameDisplay');
     const logoutButton = document.getElementById('logoutButton');
     const signInButton = document.querySelector('a[href="./frontend/login.html"]');
+    const username = localStorage.getItem('username');
 
-    // Parse the username from the URL
-    const pathSegments = window.location.pathname.split('/');
-    const username = pathSegments[pathSegments.length - 1];
-
-    if (username && username !== 'index.html') {
-        // Show username and logout button
-        usernameDisplay.textContent = `Welcome, ${decodeURIComponent(username)}`;
+    if (username) {
+        usernameDisplay.textContent = `Welcome, ${username}`;
         usernameDisplay.classList.remove('hidden');
         logoutButton.classList.remove('hidden');
         signInButton.classList.add('hidden');
-    }
-
-    if (!username || username === 'index.html') {
+    } else {
         logoutButton.classList.add('hidden');
         signInButton.classList.remove('hidden');
-    }    
+    }
 
     // Logout functionality
     logoutButton.addEventListener('click', () => {
         localStorage.removeItem('username');
-        localStorage.removeItem('token');
-        window.location.href = '../index.html';
+        window.location.href = 'https://jpuka01.github.io/game-deals-tracker/';
     });
 });
 
