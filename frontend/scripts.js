@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (searchBar) {
         searchBar.addEventListener('input', (e) => {
-            const query = e.target.value;
+            const query = e.target.value.trim();
             loadDeals(query);
         });
     } else {
