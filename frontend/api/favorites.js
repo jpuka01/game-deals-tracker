@@ -46,7 +46,8 @@ async function renderFavorites(favorites) {
     }
 
     try {
-        const dealDetails = await Promise.all(favorites.map(async (dealID) => {
+        const dealDetails = await Promise.all(favorites.map(async (encodedDealID) => {
+            const dealID = decodeURIComponent(encodedDealID);
             console.log(`Fetching details for dealID: ${dealID}`); // Debugging line
             const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?id=${dealID}`);
             if (!response.ok) {
