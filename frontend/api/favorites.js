@@ -99,8 +99,15 @@ async function renderFavorites(favorites) {
         }
     
         // Display the valid deal details
-        app.innerHTML = validDealDetails.map(deal => `<p>${JSON.stringify(deal)}</p>`).join('');
-    } catch (error) {
+        app.innerHTML = validDealDetails.map(deal => `
+            <div class="deal">
+                <h2>${deal.title}</h2>
+                <p><strong>Sale Price:</strong> $${deal.salePrice}</p>
+                <p><strong>Normal Price:</strong> $${deal.normalPrice}</p>
+                <p><strong>Deal Rating:</strong> ${deal.dealRating}</p>
+                <a href="${deal.dealLink}" target="_blank">View Deal</a>
+            </div>
+        `).join('');    } catch (error) {
         console.error('Error fetching deal details:', error);
         app.innerHTML = '<p>There was an error loading your favorite deals.</p>';
     }
