@@ -81,18 +81,15 @@ function setupFavoriteButtons() {
 async function checkLoginStatus() {
     const usernameDisplay = document.getElementById('usernameDisplay');
     const logoutButton = document.getElementById('logoutButton');
-    const signInButton = document.querySelector('a[href="./frontend/login.html"]');
     const username = localStorage.getItem('username');
 
     if (username) {
         usernameDisplay.textContent = `Welcome, ${username}!`;
         usernameDisplay.classList.remove('hidden');
         logoutButton.classList.remove('hidden');
-        signInButton.classList.add('hidden');
     } else {
         usernameDisplay.classList.add('hidden');
         logoutButton.classList.add('hidden');
-        signInButton.classList.remove('hidden');
     }
 
     logoutButton.addEventListener('click', () => {
