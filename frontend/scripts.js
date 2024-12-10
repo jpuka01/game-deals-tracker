@@ -46,11 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const username = localStorage.getItem('username');
 
     if (username) {
-        usernameDisplay.textContent = `Welcome, ${username}`;
+        usernameDisplay.textContent = `Welcome, ${username}!`;
         usernameDisplay.classList.remove('hidden');
         logoutButton.classList.remove('hidden');
         signInButton.classList.add('hidden');
     } else {
+        usernameDisplay.classList.add('hidden');
         logoutButton.classList.add('hidden');
         signInButton.classList.remove('hidden');
     }

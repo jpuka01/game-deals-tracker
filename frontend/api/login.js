@@ -14,9 +14,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            const data = await response.json();
             alert('Login successful');
-            localStorage.setItem('token', data.token); // Save token
             localStorage.setItem('username', username); // Save username
             window.location.href = `https://jpuka01.github.io/game-deals-tracker/`; // Redirect to personalized page
         } else {
