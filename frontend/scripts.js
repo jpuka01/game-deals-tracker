@@ -1,6 +1,5 @@
 import { fetchDeals } from './api/deals.js';
 
-// Fetch deals and render them
 async function loadDeals(query = '') {
     const app = document.getElementById('app');
     app.innerHTML = '<p>Loading deals...</p>';
@@ -19,7 +18,6 @@ async function loadDeals(query = '') {
     }
 }
 
-// Render deals in a responsive grid
 function renderDeals(deals) {
     const app = document.getElementById('app');
     app.innerHTML = `
@@ -79,41 +77,7 @@ function setupFavoriteButtons() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const username = localStorage.getItem('username');
-    if (!username) {
-        alert('You must be logged in to view favorites!');
-        window.location.href = './login.html';
-        return;
-    }
-
-    try {
-        const response = await fetch(`${BACKEND_URL}/favorites/${username}`);
-        const { favorites } = await response.json();
-        renderFavorites(favorites);
-    } catch (error) {
-        console.error('Error fetching favorites:', error);
-        alert('Error fetching favorite deals.');
-    }
-});
-
-function renderFavorites(favorites) {
-    const app = document.getElementById('app');
-    app.innerHTML = `
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            ${favorites.map(dealID => `
-                <div class="card border border-gray-200 rounded p-4 shadow-md">
-                    <p>Deal ID: ${dealID}</p>
-                </div>
-            `).join('')}
-        </div>
-    `;
-}
-
-
-
-// Check if the user is logged in
-document.addEventListener('DOMContentLoaded', () => {
+async function checkLoginStatus() {
     const usernameDisplay = document.getElementById('usernameDisplay');
     const logoutButton = document.getElementById('logoutButton');
     const signInButton = document.querySelector('a[href="./frontend/login.html"]');
@@ -130,18 +94,47 @@ document.addEventListener('DOMContentLoaded', () => {
         signInButton.classList.remove('hidden');
     }
 
-    // Logout functionality
     logoutButton.addEventListener('click', () => {
         localStorage.removeItem('username');
         window.location.href = 'https://jpuka01.github.io/game-deals-tracker/';
     });
-});
+}
 
+async function loadFavorites() {
+    const username = localStorage.getItem('username');
+    if (!username) {
+        alert('You must be logged in to view favorites!');
+        window.location.href = './login.html';
+        return;
+    }
 
-// Search bar functionality
+    try {
+        const response = await fetch(`${BACKEND_URL}/favorites/${username}`);
+        const { favorites } = await response.json();
+        renderFavorites(favorites);
+    } catch (error) {
+        console.error('Error fetching favorites:', error);
+        alert('Error fetching favorite deals.');
+    }
+}
+
+function renderFavorites(favorites) {
+    const app = document.getElementById('app');
+    app.innerHTML = `
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            ${favorites.map(dealID => `
+                <div class="card border border-gray-200 rounded p-4 shadow-md">
+                    <p>Deal ID: ${dealID}</p>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    const searchBar = document.getElementById('searchBar');
+    checkLoginStatus();
 
+    const searchBar = document.getElementById('searchBar');
     if (searchBar) {
         searchBar.addEventListener('input', (e) => {
             const query = e.target.value.trim();
@@ -151,10 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Search bar not found');
     }
 
-    // Initial fetch
-    loadDeals();
+    if (window.location.pathname.includes('favorites.html')) {
+        loadFavorites();
+    } else {
+        loadDeals();
+    }
 });
-
-
-// Initial fetch
-loadDeals();
