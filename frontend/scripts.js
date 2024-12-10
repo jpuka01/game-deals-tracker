@@ -1,4 +1,5 @@
 import { fetchDeals } from './api/deals.js';
+import { BACKEND_URL } from './api/config.js';
 
 async function loadDeals(query = '') {
     const app = document.getElementById('app');
