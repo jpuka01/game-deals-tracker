@@ -71,16 +71,21 @@ async function renderFavorites(favorites) {
                 console.log(`Fetching details for dealID: ${dealID}`);
                 const fetchUrl = `https://www.cheapshark.com/api/1.0/deals?id=${dealID}`;
                 console.log(`Fetch URL: ${fetchUrl}`);
-                try {
-                    const response = await fetch(fetchUrl);
-                    if (response.ok) {
-                        return await response.json();
-                    } else {
-                        console.error(`Failed to fetch details for dealID: ${dealID}`);
+                if (!fetchUrl.includes('undefined')) {
+                    try {
+                        const response = await fetch(fetchUrl);
+                        if (response.ok) {
+                            return await response.json();
+                        } else {
+                            console.error(`Failed to fetch details for dealID: ${dealID}`);
+                            return null;
+                        }
+                    } catch (fetchError) {
+                        console.error(`Fetch error for dealID: ${dealID}`, fetchError);
                         return null;
                     }
-                } catch (fetchError) {
-                    console.error(`Fetch error for dealID: ${dealID}`, fetchError);
+                } else {
+                    console.error('Fetch URL is undefined:', fetchUrl);
                     return null;
                 }
             })
@@ -92,28 +97,12 @@ async function renderFavorites(favorites) {
             app.innerHTML = '<p>No valid favorite deals could be loaded.</p>';
             return;
         }
-
-        app.innerHTML = `
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                ${validDealDetails
-                    .map(
-                        (deal) => `
-                    <div class="card border border-gray-200 rounded p-4 shadow-md">
-                        <img class="w-full rounded" src="${deal.thumb}" alt="${deal.title}">
-                        <h2 class="text-lg font-bold mt-2">${deal.title}</h2>
-                        <p class="text-gray-600">Sale Price: $${deal.salePrice}</p>
-                        <p class="text-gray-500 line-through">Normal Price: $${deal.normalPrice}</p>
-                        <a href="https://www.cheapshark.com/redirect?dealID=${deal.dealID}" target="_blank"
-                           class="text-electricBlue underline mt-2 inline-block">View Deal</a>
-                    </div>
-                `
-                    )
-                    .join('')}
-            </div>
-        `;
+    
+        // Display the valid deal details
+        app.innerHTML = validDealDetails.map(deal => `<p>${JSON.stringify(deal)}</p>`).join('');
     } catch (error) {
-        console.error('Error rendering favorite deals:', error);
-        app.innerHTML = '<p>Error loading favorite deals. Please try again later.</p>';
+        console.error('Error fetching deal details:', error);
+        app.innerHTML = '<p>There was an error loading your favorite deals.</p>';
     }
 }
 
