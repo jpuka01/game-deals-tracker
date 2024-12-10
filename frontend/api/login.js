@@ -18,7 +18,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             alert('Login successful');
             localStorage.setItem('token', data.token); // Save token
             localStorage.setItem('username', username); // Save username
-            window.location.href = `../../index/${username}`; // Redirect to personalized page
+            window.location.href = `https://jpuka01.github.io/game-deals-tracker/index/${username}`; // Redirect to personalized page
         } else {
             const errorMessage = await response.text();
             alert(`Error: ${errorMessage}`);
