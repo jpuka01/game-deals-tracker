@@ -14,6 +14,7 @@
         <nav class="flex justify-between items-center">
             <a href="../index.html" class="text-2xl font-heading">Game Deal Tracker</a>
             <div class="flex items-center gap-4">
+                <span id="usernameDisplay" class="hidden text-white"></span>
                 <button id="logoutButton" class="hidden bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Logout</button>
             </div>
         </nav>
@@ -23,6 +24,7 @@
     <main class="flex-grow flex flex-col items-center justify-center">
         <div class="container mx-auto p-6">
             <h1 class="text-3xl font-heading mb-6 text-center">Your Favorite Deals</h1>
+            <input id="searchBar" type="text" placeholder="Search favorites..." class="rounded px-4 py-2 text-black" />
             <div id="app" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <!-- Deals will be dynamically injected here -->
             </div>

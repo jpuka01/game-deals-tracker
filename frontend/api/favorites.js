@@ -119,31 +119,42 @@ async function loadFavorites() {
     }
 }
 
-function renderFavorites(favorites) {
+async function renderFavorites(favorites) {
     const app = document.getElementById('app');
-    app.innerHTML = `
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            ${favorites.map(dealID => `
-                <div class="card border border-gray-200 rounded p-4 shadow-md">
-                    <p>Deal ID: ${dealID}</p>
-                </div>
-            `).join('')}
-        </div>
-    `;
+    if (favorites.length === 0) {
+        app.innerHTML = '<p>No favorite deals found.</p>';
+        return;
+    }
+
+    try {
+        const dealDetails = await Promise.all(favorites.map(async (dealID) => {
+            const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?id=${dealID}`);
+            return await response.json();
+        }));
+
+        app.innerHTML = `
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                ${dealDetails.map(deal => `
+                    <div class="card border border-gray-200 rounded p-4 shadow-md">
+                        <img class="w-full rounded" src="${deal.thumb}" alt="${deal.title}">
+                        <h2 class="text-lg font-bold mt-2">${deal.title}</h2>
+                        <p class="text-gray-600">Sale Price: $${deal.salePrice}</p>
+                        <p class="text-gray-500 line-through">Normal Price: $${deal.normalPrice}</p>
+                        <a href="https://www.cheapshark.com/redirect?dealID=${deal.dealID}" target="_blank"
+                           class="text-electricBlue underline mt-2 inline-block">View Deal</a>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    } catch (error) {
+        console.error('Error fetching favorite deal details:', error);
+        app.innerHTML = '<p>Error loading favorite deals. Please try again later.</p>';
+    }
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     checkLoginStatus();
-
-    const searchBar = document.getElementById('searchBar');
-    if (searchBar) {
-        searchBar.addEventListener('input', (e) => {
-            const query = e.target.value.trim();
-            loadDeals(query);
-        });
-    } else {
-        console.error('Search bar not found');
-    }
 
     if (window.location.pathname.includes('favorites.html')) {
         loadFavorites();
