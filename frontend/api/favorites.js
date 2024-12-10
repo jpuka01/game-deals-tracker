@@ -92,16 +92,15 @@ async function renderFavorites(favorites) {
         );
     
         const validDealDetails = dealDetails.filter((deal) => deal !== null);
-    
+
         if (validDealDetails.length === 0) {
             app.innerHTML = '<p>No valid favorite deals could be loaded.</p>';
             return;
         }
-    
+
         // Display the valid deal details
-        // app.innerHTML = validDealDetails.map(deal => `<p>${JSON.stringify(deal)}</p>`).join('');
         app.innerHTML = validDealDetails.map(deal => {
-            const dealDetails = JSON.parse(JSON.stringify(deal));
+            const dealDetails = deal.gameInfo; // Access the gameInfo object
             return `
                 <div>
                     <h2>${dealDetails.name}</h2>
