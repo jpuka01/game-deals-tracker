@@ -62,17 +62,17 @@ async function renderFavorites(favorites) {
         const dealDetails = await Promise.all(
             favorites.map(async (encodedDealID) => {
                 const dealID = decodeURIComponent(encodedDealID).trim();
-
+    
                 if (!dealID) {
                     console.error('Invalid dealID:', encodedDealID);
                     return null;
                 }
-
+    
                 console.log(`Fetching details for dealID: ${dealID}`);
+                const fetchUrl = `https://www.cheapshark.com/api/1.0/deals?id=${dealID}`;
+                console.log(`Fetch URL: ${fetchUrl}`);
                 try {
-                    const response = await fetch(
-                        `https://www.cheapshark.com/api/1.0/deals?id=${dealID}`
-                    );
+                    const response = await fetch(fetchUrl);
                     if (response.ok) {
                         return await response.json();
                     } else {
@@ -85,9 +85,9 @@ async function renderFavorites(favorites) {
                 }
             })
         );
-
+    
         const validDealDetails = dealDetails.filter((deal) => deal !== null);
-
+    
         if (validDealDetails.length === 0) {
             app.innerHTML = '<p>No valid favorite deals could be loaded.</p>';
             return;
