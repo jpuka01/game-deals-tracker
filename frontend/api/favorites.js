@@ -47,13 +47,21 @@ async function renderFavorites(favorites) {
 
     try {
         const dealDetails = await Promise.all(favorites.map(async (dealID) => {
+            console.log(`Fetching details for dealID: ${dealID}`); // Debugging line
             const response = await fetch(`https://www.cheapshark.com/api/1.0/deals?id=${dealID}`);
+            if (!response.ok) {
+                console.error(`Failed to fetch details for dealID: ${dealID}`);
+                return null;
+            }
             return await response.json();
         }));
 
+        // Filter out any null values from failed fetches
+        const validDealDetails = dealDetails.filter(deal => deal !== null);
+
         app.innerHTML = `
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                ${dealDetails.map(deal => `
+                ${validDealDetails.map(deal => `
                     <div class="card border border-gray-200 rounded p-4 shadow-md">
                         <img class="w-full rounded" src="${deal.thumb}" alt="${deal.title}">
                         <h2 class="text-lg font-bold mt-2">${deal.title}</h2>
